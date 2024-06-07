@@ -11,14 +11,14 @@ export async function getMidiaFromTMDB(id: number, type: string): Promise<TMDB_m
     return data;
 }
 
-export async function getMoviesByQueryFromTMDB(query: string): Promise<TMDB_midia[]>{
+export async function getMidiaByQueryFromTMDB(query: string): Promise<TMDB_midia[]>{
     const res = await fetch(`${TMDB_URL}/search/multi?api_key=${TMDB_KEY}&language=pt-BR&query=${query}&page=1`);
     const data = await res.json()
 
     return data.results;
 }
 
-export async function getAllMediaFromPDZ(): Promise<PDZ_midia[]>{
+export async function getAllMidiaFromPDZ(): Promise<PDZ_midia[]>{
     const options = {
         method: 'GET',
         headers: {
@@ -33,10 +33,38 @@ export async function getAllMediaFromPDZ(): Promise<PDZ_midia[]>{
     const resSeries = await fetch(PDZ_URL + '/series/', options)
     const dataSeries = await resSeries.json();
 
-    return [...dataMovies, ...dataSeries];
+    // sort by title
+
+    const data = [...dataMovies, ...dataSeries]
+    data.sort((a, b) => {
+        if (a.title < b.title) {
+            return -1;
+        }
+        if (a.title > b.title) {
+            return 1;
+        }
+        return 0;
+    });
+
+    return data;
 }
 
-export async function alredyExistsInPdz(id: number, type: string): Promise<boolean>{
+export async function getTvFromPDZ(id: number): Promise<PDZ_midia>{
+    const options = {
+        method: 'GET',
+        headers: {
+            "Content-type": "application/json; charset=UTF-8",
+            "Authorization": 'Bearer '
+        }
+    }
+
+    const res = await fetch(PDZ_URL + '/tv/' + id, options)
+    const data = await res.json();
+
+    return data;
+}
+
+export async function alredyExistsInPDZ(id: number, type: string): Promise<boolean>{
     const options = {
         method: 'GET',
         headers: {
@@ -54,7 +82,7 @@ export async function alredyExistsInPdz(id: number, type: string): Promise<boole
 export async function sendMovieToPDZ(movie: PDZ_midia): Promise<boolean> {
     const options = {
         method: 'POST',
-        body: JSON.stringify({ "title": movie.title, "tmdb_id": movie.tmdb_id, "tmdb_type": movie.tmdb_type, "magnet_and_resolution": movie.magnets, "filter": movie.filters }),
+        body: JSON.stringify({ "title": movie.title, "tmdb_id": movie.tmdb_id, "tmdb_type": movie.tmdb_type, "magnet_and_resolution": movie.magnet_and_resolution, "filter": movie.filter }),
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
@@ -73,7 +101,7 @@ export async function sendTvToPDZ(tv: PDZ_midia): Promise<boolean> {
 
     const options = {
         method: 'POST',
-        body: JSON.stringify({ "title": tv.title, "tmdb_id": tv.tmdb_id, "tmdb_type": tv.tmdb_type, "seasons": tv.seasons, "filter": tv.filters }),
+        body: JSON.stringify({ "title": tv.title, "tmdb_id": tv.tmdb_id, "tmdb_type": tv.tmdb_type, "seasons": tv.seasons, "filter": tv.filter }),
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
@@ -92,7 +120,7 @@ export async function sendTvToPDZ(tv: PDZ_midia): Promise<boolean> {
 export async function updatePDZMovie(movie: PDZ_midia): Promise<boolean>{
     const options = {
         method: 'PUT',
-        body: JSON.stringify({ "title": movie.title, "tmdb_id": movie.tmdb_id, "tmdb_type": movie.tmdb_type, "magnet_and_resolution": movie.magnets, "filter": movie.filters }),
+        body: JSON.stringify({ "title": movie.title, "tmdb_id": movie.tmdb_id, "tmdb_type": movie.tmdb_type, "magnet_and_resolution": movie.magnet_and_resolution, "filter": movie.filter }),
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
@@ -110,7 +138,7 @@ export async function updatePDZMovie(movie: PDZ_midia): Promise<boolean>{
 export async function updatePDZTV(tv: PDZ_midia): Promise<boolean> {
     const options = {
         method: 'PUT',
-        body: JSON.stringify({ "title": tv.title, "tmdb_id": tv.tmdb_id, "tmdb_type": tv.tmdb_type, "seasons": tv.seasons, "filter": tv.filters }),
+        body: JSON.stringify({ "title": tv.title, "tmdb_id": tv.tmdb_id, "tmdb_type": tv.tmdb_type, "seasons": tv.seasons, "filter": tv.filter }),
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }

@@ -2,13 +2,13 @@ import ModalCard from "@/app/components/ModalCard"
 import StremioButton from "@/app/components/StremioButton"
 import { getAllMidiaFromPDZ } from "@/utils/requests"
 
-const Tv = async () => {
+const Anime = async () => {
 
     const allMidia = await getAllMidiaFromPDZ()
     const filteredMovies :PDZ_midia[] = []
 
     allMidia.forEach(midia => {
-        if (midia.filter.includes('serie')) {
+        if (midia.filter.includes('anime')) {
             filteredMovies.push(midia)
         }
     })
@@ -29,4 +29,4 @@ const Tv = async () => {
     )
 }
 
-export default Tv
+export default Anime

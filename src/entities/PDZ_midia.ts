@@ -2,23 +2,23 @@ class PDZ_midia {
     public title: string
     public tmdb_id: number
     public tmdb_type: string
-    public filters: Array<string>
-    public magnets?: Array<MagnetLinkWithResolution>
+    public filter: Array<string>
+    public magnet_and_resolution?: Array<MagnetLinkWithResolution>
     public seasons?: Array<Season>
 
-    constructor(title: string, tmdb_id: number, tmdb_type: string, filters: Array<string>) {
+    constructor(title: string, tmdb_id: number, tmdb_type: string, filter: Array<string>) {
         this.title = title
         this.tmdb_id = tmdb_id
         this.tmdb_type = tmdb_type
-        this.filters = filters
+        this.filter = filter
     }
 
     addMagnet(magnet: MagnetLinkWithResolution) {
-        if (this.magnets === undefined) {
-            this.magnets = []
+        if (this.magnet_and_resolution === undefined) {
+            this.magnet_and_resolution = []
         }
 
-        this.magnets.push(magnet)
+        this.magnet_and_resolution.push(magnet)
     }
 
     getSeasonsQuantity(): number{
@@ -40,13 +40,13 @@ class PDZ_midia {
 
 class Season {
 
-    public seasonName: string
-    public episodesQuantity: number
+    public name: string
+    public episodesAmount: number
     public episodes: Array<Episode>
 
     constructor(seasonName: string, episodesQuantity: number) {
-        this.seasonName = seasonName
-        this.episodesQuantity = episodesQuantity
+        this.name = seasonName
+        this.episodesAmount = episodesQuantity
         this.episodes = []
     }
 
@@ -60,11 +60,11 @@ class Season {
 }
 
 type Episode = {
-    episodeName: string,
-    magnet: string
+    name: string,
+    magnetLink: string
 }
 
 type MagnetLinkWithResolution = {
-    magnet: string,
+    magnetLink: string,
     resolution: string
 }
