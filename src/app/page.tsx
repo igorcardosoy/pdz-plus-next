@@ -1,17 +1,17 @@
 import { getAllMidiaFromPDZ, getMidiaFromTMDB } from "@/utils/requests"
-import ModalCard from "./components/ModalCard"
-import StremioButton from "./components/StremioButton"
+import ModalCard from "../components/ModalCard"
+import StremioButton from "../components/StremioButton"
 
 const Home = async () => {
 
   const pdzMidia: PDZ_midia[] = await getAllMidiaFromPDZ()
 
   return (
-    <div className="d-flex align-items-center mt-5 flex-column">
-      
+    <div className="flex justify-center items-center mt-5 flex-col">
+
       <StremioButton />
 
-      <div className="d-flex justify-content-center flex-wrap gap-5 mt-5 mx-5 mb-5">
+      <div className="flex justify-center flex-wrap gap-5 mt-5 mx-5 mb-5">
         {
           pdzMidia.map((midia, index) => {
             return (
@@ -20,6 +20,8 @@ const Home = async () => {
           })
         }
       </div>
+
+      
 
     </div>
   )

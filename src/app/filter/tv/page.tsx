@@ -1,11 +1,11 @@
-import ModalCard from "@/app/components/ModalCard"
-import StremioButton from "@/app/components/StremioButton"
+import ModalCard from "@/components/ModalCard"
+import StremioButton from "@/components/StremioButton"
 import { getAllMidiaFromPDZ } from "@/utils/requests"
 
 const Tv = async () => {
 
     const allMidia = await getAllMidiaFromPDZ()
-    const filteredMovies :PDZ_midia[] = []
+    const filteredMovies: PDZ_midia[] = []
 
     allMidia.forEach(midia => {
         if (midia.filter.includes('serie')) {
@@ -15,17 +15,18 @@ const Tv = async () => {
 
 
     return (
-        <div className="d-flex align-items-center mt-5 flex-column">
-        <StremioButton />
+        <div className="flex justify-center items-center mt-5 flex-col">
 
-        <div className="d-flex justify-content-center flex-wrap gap-5 mt-5 mx-5 mb-5">
-            {filteredMovies.map((midia, index) => {
-                return (
-                    <ModalCard key={index} modalId={index} pdzMidia={midia}/>
-                )
-            })}
+            <StremioButton />
+
+            <div className="flex justify-center flex-wrap gap-5 mt-5 mx-5 mb-5">
+                {filteredMovies.map((midia, index) => {
+                    return (
+                        <ModalCard key={index} modalId={index} pdzMidia={midia} />
+                    )
+                })}
+            </div>
         </div>
-    </div>
     )
 }
 
