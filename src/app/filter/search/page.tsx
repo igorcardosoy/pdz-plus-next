@@ -27,7 +27,7 @@ const Search = async ({ searchParams = {} as { query: string } }) => {
             <div className="flex justify-center flex-wrap gap-5 mt-5 mx-5 mb-5">
                 {midiaFiltered.map((midia, index) => {
                     return (
-                        <ModalCard modalId={index} pdzMidia={midia} />
+                        <ModalCard key={index} modalId={index} pdzMidia={midia} />
                     )
                 })}
             </div>
