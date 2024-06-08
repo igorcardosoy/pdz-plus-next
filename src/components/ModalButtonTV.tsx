@@ -37,7 +37,7 @@ const ModalButtonTV: React.FC<ModalButtonTVProps> = ({ modalId = 0, midia = {} a
   return (
     <div className="flex flex-wrap gap-3 text-center items-center justify-center">
       <div className={`seasons-${modalId}`}>
-        <select onChange={handleChangeSeason} className="select select-bordered w-full max-w-xs">
+        <select onChange={handleChangeSeason} className="select btn-outline btn-primary w-full max-w-xs">
           {seasons.map((season, index) => (
             <option key={index} value={index}>
               {season.name}
@@ -47,7 +47,7 @@ const ModalButtonTV: React.FC<ModalButtonTVProps> = ({ modalId = 0, midia = {} a
       </div>
 
       <div className={`episodes-${modalId}`}>
-        <select onChange={handleChangeEpisode} className="select select-bordered w-full max-w-xs">
+        <select onChange={handleChangeEpisode} className="select btn-outline btn-primary w-full max-w-xs">
           {episodes.map((episode, index) => (
             <option key={index} value={index}>
               {episode.name}
@@ -60,7 +60,7 @@ const ModalButtonTV: React.FC<ModalButtonTVProps> = ({ modalId = 0, midia = {} a
         <a
           href={episodes[episodeIndex]?.magnetLink || ''}
           target="_blank"
-          className={`btn btn-outline-light page-button button-download-id${modalId}`}
+          className={`btn btn-outline btn-success page-button button-download-id${modalId}`}
           role="button"
         >
           Baixar

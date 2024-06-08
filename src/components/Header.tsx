@@ -34,7 +34,7 @@ const Header = () => {
                         <li><Link id="anime" href="/filter/anime">Animes</Link></li>
                     </ul>
                 </div>
-                <Link className="btn btn-ghost text-xl" id="all" href="/">PDZ+</Link>
+                <Link className="btn btn-ghost text-xl ml-3" id="all" href="/">PDZ+</Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1 gap-1">
@@ -48,7 +48,7 @@ const Header = () => {
             <div className="navbar-end">
                 <div className="flex-none gap-2 lg:flex">
                     <div className="form-control">
-                        <input onChange={handleChange}  value={searchText} className="input input-bordered w-24 md:w-auto" type="search" placeholder="Pesquisar" aria-label="Search" />
+                        <input onChange={handleChange}  value={searchText} className="input input-bordered w-24 md:w-auto mr-3" type="search" placeholder="Pesquisar" aria-label="Search" />
                     </div>
                     
                     {/* <div className="dropdown dropdown-end">
