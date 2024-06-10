@@ -25,6 +25,12 @@ const ModalCard = ({ modalId = 0 as number, pdzMidia = {} as PDZ_midia, isAuthen
         return <div>Erro ao carregar os dados</div>
     }
 
+    const handleKeyDownModal = (e: any) => {
+        if (e.key === 'Escape') {
+            e.target.checked = false
+        }
+    }
+
     const tmdbMidia: TMDB_midia = res.data
     const TMDB_IMG_URL = process.env.NEXT_PUBLIC_TMDB_PUBLIC_IMAGE_BASE_URL
 
@@ -50,7 +56,7 @@ const ModalCard = ({ modalId = 0 as number, pdzMidia = {} as PDZ_midia, isAuthen
                     </div>
                 </div>
             </label>
-            <input type="checkbox" id={"my_modal_" + modalId} className="modal-toggle" />
+            <input onKeyDown={handleKeyDownModal} type="checkbox" id={"my_modal_" + modalId} className="modal-toggle" />
 
             <div className="modal" role="dialog">
                 <div className="modal-box flex gap-5 flex-col">
