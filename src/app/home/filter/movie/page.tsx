@@ -1,4 +1,4 @@
-import ModalCard from "@/components/ModalCard"
+import ModalCard from "@/components/Modal/ModalCard"
 import StremioButton from "@/components/StremioButton"
 import { getAllMidiaFromPDZ } from "@/utils/requests"
 
@@ -12,7 +12,7 @@ const Movie = async () => {
 
             <StremioButton />
 
-            <div className="flex justify-center flex-wrap gap-5 mt-5 mx-5 mb-5">
+            <div className="flex justify-center flex-wrap gap-5 ml-40 mr-40 mt-5 mx-5 mb-5">
                 {filteredMovies.map((midia, index) => {
                     return (
                         <ModalCard key={index} modalId={index} pdzMidia={midia} />

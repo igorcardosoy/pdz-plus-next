@@ -1,12 +1,32 @@
-import { getMidiaFromTMDB } from "@/utils/requests"
+"use client"
+
 import ModalButtonMovie from "./ModalButtonMovie"
 import ModalButtonTV from "./ModalButtonTV"
-import Image from "next/image"
+import { MagnetLinkWithResolution, PDZ_midia } from "@/entities/PDZ_midia"
+import { useGetMidiaFromTMDBWithoutAsync, srwResponseTMDB } from "@/utils/swrRequests"
+import { isAdministrator } from "@/utils/authentication"
+import ModalRemoveButton from "./ModalRemoveButton"
 
-const ModalCard = async ({ modalId = 0 as number, pdzMidia = {} as PDZ_midia }) => {
+const ModalCard = ({ modalId = 0 as number, pdzMidia = {} as PDZ_midia, isAuthenticated = false as boolean }) => {
 
-    const tmdbMidia: TMDB_midia = await getMidiaFromTMDB(pdzMidia.tmdb_id, pdzMidia.tmdb_type)
-    const TMDB_IMG_URL = process.env.TMDB_PUBLIC_IMAGE_BASE_URL
+    const res: srwResponseTMDB = useGetMidiaFromTMDBWithoutAsync(pdzMidia.tmdb_id, pdzMidia.tmdb_type)
+    if (res.isLoading) {
+        return (
+            <div className="flex justify-center items-center mt-5 flex-col">
+                <div className="flex flex-col gap-4 w-52">
+                    <div className="skeleton h-32 w-full"></div>
+                    <div className="skeleton h-4 w-28"></div>
+                    <div className="skeleton h-4 w-full"></div>
+                    <div className="skeleton h-4 w-full"></div>
+                </div>
+            </div>
+        )
+    } else if (res.error) {
+        return <div>Erro ao carregar os dados</div>
+    }
+
+    const tmdbMidia: TMDB_midia = res.data
+    const TMDB_IMG_URL = process.env.NEXT_PUBLIC_TMDB_PUBLIC_IMAGE_BASE_URL
 
     tmdbMidia.backdrop_path = TMDB_IMG_URL + tmdbMidia.backdrop_path
 
@@ -20,9 +40,9 @@ const ModalCard = async ({ modalId = 0 as number, pdzMidia = {} as PDZ_midia }) 
     return (
 
         <div>
-            <label htmlFor={"my_modal_" + modalId} className="cursor-pointer">
-                <div className="card w-60 bg-base-100 shadow-xl">
-                    <figure className="px-10 pt-10">
+            <label htmlFor={"my_modal_" + modalId} className="cursor-pointer shadow-lg">
+                <div className="card w-52 bg-base-100 shadow-xl">
+                    <figure className="px-5 pt-5">
                         <img src={TMDB_IMG_URL + tmdbMidia.poster_path} alt={"Poster de " + tmdbMidia.title} className="rounded-xl" />
                     </figure>
                     <div className="card-body items-center text-center ">
@@ -58,14 +78,17 @@ const ModalCard = async ({ modalId = 0 as number, pdzMidia = {} as PDZ_midia }) 
                     <div className="modal-action">
                         <div className="flex justify-center gap-3" style={{ width: "100%", height: "100%" }}>
                             {
-                                pdzMidia.magnet_and_resolution?.map((magnetAndRes) => {
+                                pdzMidia.magnet_and_resolution?.map((magnetAndRes: MagnetLinkWithResolution, index) => {
                                     return (
-                                        <ModalButtonMovie key={pdzMidia.tmdb_id + '-' + pdzMidia.tmdb_type} magnetAndRes={magnetAndRes} />
+                                        <ModalButtonMovie key={pdzMidia.tmdb_id + '-' + pdzMidia.tmdb_type + '-' + index} magnetAndRes={magnetAndRes} />
                                     )
                                 })
                             }
                             {
                                 pdzMidia.seasons != undefined ? <ModalButtonTV modalId={modalId} midia={pdzMidia} /> : ''
+                            }
+                            {
+                                isAdministrator(isAuthenticated) ? <ModalRemoveButton type={pdzMidia.tmdb_type} id={pdzMidia.id} /> : ''
                             }
                         </div>
                     </div>

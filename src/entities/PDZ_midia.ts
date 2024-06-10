@@ -1,5 +1,6 @@
 class PDZ_midia {
     public title: string
+    public id?: number
     public tmdb_id: number
     public tmdb_type: string
     public filter: Array<string>
@@ -68,3 +69,6 @@ type MagnetLinkWithResolution = {
     magnetLink: string,
     resolution: string
 }
+
+export type {MagnetLinkWithResolution, Episode}
+export { PDZ_midia, Season}

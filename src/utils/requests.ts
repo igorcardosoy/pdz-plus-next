@@ -1,6 +1,8 @@
-const TMDB_KEY:string = String(process.env.TMDB_PUBLIC_KEY)
-const TMDB_URL:string = String(process.env.TMDB_PUBLIC_BASE_URL)
-const PDZ_URL:string = String(process.env.PDZ_PUBLIC_BASE_URL)
+import { PDZ_midia } from "@/entities/PDZ_midia";
+
+export const TMDB_KEY:string = String(process.env.NEXT_PUBLIC_TMDB_PUBLIC_KEY)
+export const TMDB_URL:string = String(process.env.NEXT_PUBLIC_TMDB_PUBLIC_BASE_URL)
+export const PDZ_URL:string = String(process.env.NEXT_PUBLIC_PDZ_PUBLIC_BASE_URL)
 
 
 export async function getMidiaFromTMDB(id: number, type: string): Promise<TMDB_midia> {
@@ -12,6 +14,8 @@ export async function getMidiaFromTMDB(id: number, type: string): Promise<TMDB_m
 }
 
 export async function getMidiaByQueryFromTMDB(query: string): Promise<TMDB_midia[]>{
+    console.log(query)
+    console.log(`${TMDB_URL}/search/multi?api_key=${TMDB_KEY}&language=pt-BR&query=${query}&page=1`)
     const res = await fetch(`${TMDB_URL}/search/multi?api_key=${TMDB_KEY}&language=pt-BR&query=${query}&page=1`);
     const data = await res.json()
 
@@ -27,10 +31,10 @@ export async function getAllMidiaFromPDZ(): Promise<PDZ_midia[]>{
         }
     }
 
-    const resMovies = await fetch(PDZ_URL + '/movies/', options)
+    const resMovies = await fetch(PDZ_URL + '/movie/', options)
     const dataMovies = await resMovies.json();
 
-    const resSeries = await fetch(PDZ_URL + '/series/', options)
+    const resSeries = await fetch(PDZ_URL + '/tv/', options)
     const dataSeries = await resSeries.json();
 
     // sort by title
@@ -79,7 +83,14 @@ export async function alredyExistsInPDZ(id: number, type: string): Promise<boole
     return result.length > 0
 }
 
-export async function sendMovieToPDZ(movie: PDZ_midia): Promise<boolean> {
+export async function sendMovieToPDZ(tmdb_id: number, tmdb_type: string, title: string, filter: Array<string>, magnet_and_resolution: Array<{magnetLink: string, resolution: string}>): Promise<boolean> {
+
+    const movie = new PDZ_midia(title, tmdb_id, tmdb_type, filter)
+
+    for (let i = 0; i < magnet_and_resolution.length; i++) {
+        movie.addMagnet(magnet_and_resolution[i])
+    }
+
     const options = {
         method: 'POST',
         body: JSON.stringify({ "title": movie.title, "tmdb_id": movie.tmdb_id, "tmdb_type": movie.tmdb_type, "magnet_and_resolution": movie.magnet_and_resolution, "filter": movie.filter }),

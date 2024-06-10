@@ -1,5 +1,6 @@
 "use client"
 
+import { Episode, PDZ_midia, Season } from "@/entities/PDZ_midia";
 import { useEffect, useState } from "react";
 
 interface ModalButtonTVProps {
@@ -8,7 +9,6 @@ interface ModalButtonTVProps {
 }
 
 const ModalButtonTV: React.FC<ModalButtonTVProps> = ({ modalId = 0, midia = {} as PDZ_midia }) => {
-  const [seasonIndex, setSeasonIndex] = useState(0);
   const [episodeIndex, setEpisodeIndex] = useState(0);
   const [seasons, setSeasons] = useState<Season[]>([]);
   const [episodes, setEpisodes] = useState<Episode[]>([]);
@@ -24,7 +24,6 @@ const ModalButtonTV: React.FC<ModalButtonTVProps> = ({ modalId = 0, midia = {} a
 
   const handleChangeSeason = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedSeasonIndex = parseInt(event.target.value, 10);
-    setSeasonIndex(selectedSeasonIndex);
     const selectedSeason = seasons[selectedSeasonIndex];
     setEpisodes(selectedSeason ? selectedSeason.episodes : []);
     setEpisodeIndex(0);

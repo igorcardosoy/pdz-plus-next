@@ -1,3 +1,5 @@
+import { MagnetLinkWithResolution } from "@/entities/PDZ_midia"
+
 const ModalButtonMovie = ({ magnetAndRes = {} as MagnetLinkWithResolution }) => {
     return (
         <div className="d-flex justify-content-center">
