@@ -68,7 +68,7 @@ function getUser() {
 }
 
 
-function isAuthenticated(): boolean {
+function useAuthenticated(): boolean {
   const data = useSWR(PDZ_URL + '/660/users/', fetcher);
   const result = data.data
 
@@ -91,4 +91,4 @@ function cleanToken() {
   window.localStorage.removeItem("userId");
 }
 
-export { authenticate, isAuthenticated, isAdministrator, getUser, cleanToken }
+export { authenticate, useAuthenticated as isAuthenticated, isAdministrator, getUser, cleanToken }
