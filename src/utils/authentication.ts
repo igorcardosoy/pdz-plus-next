@@ -21,7 +21,7 @@ export type swrPDZUserRes = {
 }
 
 
-const fetcher = async (url: string) => {
+const fetcherWithToken = async (url: string) => {
   const token = window.localStorage.getItem("token");
 
   const options = {
@@ -69,11 +69,14 @@ function getUser() {
 
 
 function useAuthenticated(): boolean {
-  const data = useSWR(PDZ_URL + '/660/users/', fetcher);
-  const result = data.data
+  const data = useSWR(PDZ_URL + '/660/users/', fetcherWithToken);
 
-  if (result != 'jwt malformed') {
-    return true;
+  if (!data.isLoading && !data.error) {
+    const result = data.data
+
+    if (result != 'jwt malformed') {
+      return true;
+    }
   }
 
   return false;
