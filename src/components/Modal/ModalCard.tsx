@@ -52,7 +52,7 @@ const ModalCard = ({ modalId = 0 as number, pdzMidia = {} as PDZ_midia, isAuthen
                         <img src={TMDB_IMG_URL + tmdbMidia.poster_path} alt={"Poster de " + tmdbMidia.title} className="rounded-xl" />
                     </figure>
                     <div className="card-body items-center text-center ">
-                        <h5 className="card-title truncate text-wrap align-text-top	items-start" style={{ height: '60px' }}> {tmdbMidia.title}</h5>
+                        <h5 className="text-clip text-wrap align-text-top items-start" style={{ height: '60px' }}> {tmdbMidia.title}</h5>
                     </div>
                 </div>
             </label>
