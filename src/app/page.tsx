@@ -1,6 +1,7 @@
 'use client'
 
 import { authenticate } from "@/utils/authentication"
+import { signIn } from "next-auth/react"
 import { toast } from "react-toastify"
 
 
@@ -56,6 +57,7 @@ const loginPage = () => {
           <button type="submit" className="btn btn-active btn-accent">Entrar</button>
 
           <button onClick={loginWithoutAccount} type="button" className="btn btn-active btn-accent">Entrar sem login</button>
+          <button onClick={()=>signIn("discord", {callbackUrl:"/home"})} type="button" className="btn btn-active btn-accent">Entrar com discord</button>
         </div>
       </form>
     </div>

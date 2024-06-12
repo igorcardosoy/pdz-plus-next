@@ -1,3 +1,5 @@
+"use client"
+
 import { PDZ_midia } from "@/entities/PDZ_midia"
 import ModalCard from "./Modal/ModalCard"
 import StremioButton from "./StremioButton"
@@ -5,7 +7,7 @@ import { srwResponsePDZ, useGetAllMidiaFromPDZWithoutAsync } from "@/utils/swrRe
 import { isAuthenticated } from "@/utils/authentication"
 import { getFilteredMidia } from "@/utils/filterMidia"
 
-const MidiaContent = ({ midiaType = 'all' as string, searchText = '' as string }) => {
+const MidiaContent = ({ midiaType = 'all' as string, searchText = '' as string, }) => {
     const isAuth: boolean = isAuthenticated()
     const midiaFinded: srwResponsePDZ = useGetAllMidiaFromPDZWithoutAsync()
     const midiaFiltered: PDZ_midia[] = []

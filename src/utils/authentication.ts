@@ -2,11 +2,12 @@
 
 import useSWR from "swr";
 import { PDZ_URL } from "./requests";
+import Cookies from 'js-cookie'
+import { useSession } from "next-auth/react"
 
 export type user = {
-  id: string,
-  name: string,
-  profilePicture: string,
+  name: string | any,
+  profilePicture: string | any,
 }
 
 export type pdzUser = {
@@ -68,7 +69,11 @@ function getUser() {
 }
 
 
-function useAuthenticated(): boolean {
+function useAuthenticated(session:boolean=false): boolean {
+
+  if(session){
+    return true
+  }
   const data = useSWR(PDZ_URL + '/660/users/', fetcherWithToken);
 
   if (!data.isLoading && !data.error) {
@@ -77,6 +82,7 @@ function useAuthenticated(): boolean {
     if (result != 'jwt malformed') {
       return true;
     }
+    
   }
 
   return false;

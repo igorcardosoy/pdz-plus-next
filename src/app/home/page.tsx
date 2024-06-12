@@ -1,8 +1,13 @@
-'use client'
+
 
 import MidiaContent from "@/components/MidiaContent"
 
-const Home = () => {
+
+const Home = async () => {
+
+  
+    
+
 
   return (
     <MidiaContent />
