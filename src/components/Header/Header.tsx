@@ -9,9 +9,8 @@ import LoginButton from "./LoginButton"
 import NavButtons from "./NavButtons"
 import SearchBar from "./SearchBar"
 
-const Header = () => {
-    let isAuth: boolean = isAuthenticated()
-    const user: user = getUser()
+const Header = ({has_session= false as boolean, user = {} as user }) => {
+    let isAuth: boolean = isAuthenticated(has_session)
 
     return (
         <div className="navbar bg-base-100">
