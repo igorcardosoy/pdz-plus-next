@@ -1,13 +1,14 @@
 'use client'
 
-import { cleanToken, user } from "@/utils/authentication"
+import { user } from "@/entities/Users"
+import { cleanToken } from "@/utils/authentication"
 import { signOut } from "next-auth/react"
+
 const ProfileButton = ({ user = {} as user}) => {
 
     const handleLogout = () => {
         cleanToken()
         signOut()
-        //window.location.reload()
     }
 
     return (

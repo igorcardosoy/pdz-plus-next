@@ -1,11 +1,11 @@
 import {api} from "../index"
 
 
-export const check_user_is_allowed = async (username: string | null | undefined): Promise<boolean | Error> => {
+export const checkIfUserIsAllowed = async (username: string | null | undefined): Promise<boolean | Error> => {
     try{
-        const urlRelativa = '/discord_user/check_username'
+        const urlRelative = '/discord_user/check_username'
         
-        const {data} = await api.post(urlRelativa,{username:username});
+        const {data} = await api.post(urlRelative,{username:username});
         if(data){
             return data.accepted
         }

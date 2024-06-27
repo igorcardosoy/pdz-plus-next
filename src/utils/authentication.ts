@@ -2,18 +2,8 @@
 
 import useSWR from "swr";
 import { PDZ_URL } from "./requests";
-import Cookies from 'js-cookie'
-import { useSession } from "next-auth/react"
-
-export type user = {
-  name: string | any,
-  profilePicture: string | any,
-}
-
-export type pdzUser = {
-  email: string,
-  password: string
-}
+import { user, pdzUser } from "@/entities/Users";
+import { redirect, useRouter } from "next/navigation";
 
 export type swrPDZUserRes = {
   data: user,
@@ -22,14 +12,15 @@ export type swrPDZUserRes = {
 }
 
 
+
 const fetcherWithToken = async (url: string) => {
-  const token = window.localStorage.getItem("token");
+  let token = window.localStorage.getItem("token");
 
   const options = {
     method: 'GET',
     headers: {
       "Content-type": "application/json; charset=UTF-8",
-      "Authorization": `Bearer ${token}`, // Template literal for string interpolation
+      "Authorization": `Bearer ${token}`
     },
   };
 
@@ -60,38 +51,40 @@ async function authenticate(pdzUser: pdzUser): Promise<boolean> {
   return false;
 }
 
-function getUser() {
-  return {
-    id: '123',
-    name: 'John Doe',
-    profilePicture: "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-  } as user
-}
 
 
-function useAuthenticated(session:boolean=false): boolean {
-
-  if(session){
-    return true
-  }
+export function useAuthenticated(): boolean {
   const data = useSWR(PDZ_URL + '/660/users/', fetcherWithToken);
 
   if (!data.isLoading && !data.error) {
     const result = data.data
 
     if (result != 'jwt malformed') {
-      return true;
+      return true
     }
-    
   }
 
-  return false;
+  return false
 }
 
-function isAdministrator(isAuthenticated: boolean): boolean {
-  if (isAuthenticated) {
+export async function isAuthenticated(): Promise<boolean> {
+  let token = window.localStorage.getItem("token");
+
+  const options = {
+    method: 'GET',
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+      "Authorization": `Bearer ${token}`
+    },
+  };
+
+  const data = await fetch(PDZ_URL + '/660/users/', options)
+  const res = await data.json();
+
+  if (res != 'jwt malformed') {
     return true;
   }
+
   return false;
 }
 
@@ -100,4 +93,4 @@ function cleanToken() {
   window.localStorage.removeItem("userId");
 }
 
-export { authenticate, useAuthenticated as isAuthenticated, isAdministrator, getUser, cleanToken }
+export { authenticate, cleanToken }

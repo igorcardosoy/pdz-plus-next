@@ -1,7 +1,7 @@
 const MagnetLinkAndRes = ({magnetLinkId = 0 as number}) => {
     return (
         <div>
-            <section className="magnet-link-with-resolution mb-3 flex flex-col gap-2 alert bg-neutral shadow-lg w-80">
+            <section className="magnet-link-with-resolution mb-3 flex flex-col gap-2 alert bg-neutral shadow-lg w-96">
 
                 <label className="input input-bordered flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-link-45deg" viewBox="0 0 16 16">

@@ -1,11 +1,10 @@
 'use server'
-import type { Metadata } from "next";
-import Header from "../../components/Header/Header";
-import { getServerSession } from "next-auth"
-import { redirect } from "next/navigation"
-import { authOptions } from "../api/auth/[...nextauth]/route"
-import { user } from "@/utils/authentication";
-import { check_user_is_allowed } from "@/utils/api/discord_user/DiscordUserService";
+
+import { user } from "@/entities/Users";
+import { getServerSession } from "next-auth";
+import { checkIfUserIsAllowed } from "@/utils/api/discord_user/DiscordUserService";
+import AuthenticatedLayout from "@/components/AuthenticatedLayout";
+import { createUser } from "@/utils/api";
 
 
 export default async function RootLayout({
@@ -13,30 +12,30 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession(authOptions)
-
-  if(!session){       
-    redirect("/")
-  }
-
-  const allowed_user = await check_user_is_allowed(session?.user?.name)
   
-  if(allowed_user !==  true){
-      redirect("/")
+  let isDiscordAuthenticated: boolean = true
+  let isAllowedUser: boolean | Error = false
+
+  const session = await getServerSession()
+  if (session) {
+    isAllowedUser = await checkIfUserIsAllowed(session?.user?.name)
+    if (isAllowedUser !== true) {
+      isDiscordAuthenticated = false
+    }
+  } else {
+    isDiscordAuthenticated = false
   }
 
-  const user: user = {
-    name: session.user?.name,
-    profilePicture: session.user?.image
-  } 
+  let user: user
+  if (isDiscordAuthenticated && session) {
+    user = createUser(session.user?.name, session.user?.image)
+  } else {
+    user = createUser("ADM", "https://cdn.icon-icons.com/icons2/2620/PNG/512/among_us_player_red_icon_156942.png")
+  }
 
   return (
-    <div>
-        <Header has_session={session?true:false} user={user}/>
-
-        <main>
-          {children}
-        </main>
-    </div>
+    <>
+      <AuthenticatedLayout isDiscordAuthenticated={isDiscordAuthenticated} children={children} user={user} />
+    </>
   );
 }

@@ -19,5 +19,3 @@ export function getFilteredMidia(midiaFinded: srwResponsePDZ, midiaType: string,
             return []
     }
 }
-
-//midiaFinded, midiaType, searchText

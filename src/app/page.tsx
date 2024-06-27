@@ -35,9 +35,6 @@ const loginPage = () => {
     }
   }
 
-  const loginWithoutAccount = () => {
-    window.location.href = '/home'
-  }
 
   return (
     <div className="flex justify-evenly items-center flex-col h-svh">
@@ -55,8 +52,6 @@ const loginPage = () => {
         </label>
         <div className="flex gap-3">
           <button type="submit" className="btn btn-active btn-accent">Entrar</button>
-
-          <button onClick={loginWithoutAccount} type="button" className="btn btn-active btn-accent">Entrar sem login</button>
           <button onClick={()=>signIn("discord", {callbackUrl:"/home"})} type="button" className="btn btn-active btn-accent">Entrar com discord</button>
         </div>
       </form>

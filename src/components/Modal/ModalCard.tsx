@@ -94,7 +94,7 @@ const ModalCard = ({ modalId = 0 as number, pdzMidia = {} as PDZ_midia, isAuthen
                                 pdzMidia.seasons != undefined ? <ModalButtonTV modalId={modalId} midia={pdzMidia} /> : ''
                             }
                             {
-                                isAdministrator(isAuthenticated) ? <ModalRemoveButton type={pdzMidia.tmdb_type} id={pdzMidia.id} /> : ''
+                                isAuthenticated ? <ModalRemoveButton type={pdzMidia.tmdb_type} id={pdzMidia.id} /> : ''
                             }
                         </div>
                     </div>

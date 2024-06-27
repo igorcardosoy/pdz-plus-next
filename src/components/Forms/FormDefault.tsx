@@ -3,7 +3,7 @@
 import { searchMidiaInTMDB } from "@/utils/movieSearch"
 import { useState } from "react"
 
-const FormDefault = ({setMidiaType = {} as any}) => {
+const FormDefault = ({ setMidiaType = {} as any }) => {
 
     const [midiaList, setMidiaList] = useState([] as TMDB_midia[])
 
@@ -25,7 +25,7 @@ const FormDefault = ({setMidiaType = {} as any}) => {
         setMidiaType(String(midiaList.find(midia => midia.id == Number(midiaId))?.media_type))
     }
 
-    midiaList.map((midia) => { 
+    midiaList.map((midia) => {
         if (midia.title === undefined) {
             midia.title = midia.name
         }
@@ -33,22 +33,22 @@ const FormDefault = ({setMidiaType = {} as any}) => {
 
     return (
         <section className="flex flex-col gap-4 items-center">
-            <section className="flex flex-wrap gap-3 justify-center w-80  bg-neutral shadow-lg alert">
+            <section className="flex flex-wrap gap-3 justify-center w-96  bg-neutral shadow-lg alert">
                 <label className="input input-bordered flex items-center gap-2 shadow-lg w-80">
                     <input onChange={movieSearch} type="text" className="grow" placeholder="Pesquisar no TMDB" />
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path fillRule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clipRule="evenodd" /></svg>
                 </label>
 
-                <section id="midia-list" className="flex flex-wrap gap-3">
+                <section id="midia-list" className="flex flex-wrap gap-2">
                     {
                         midiaList.map((midia) => {
                             return (
                                 <div onClick={handleClickInCard} id={String(midia.id)} key={midia.id} className="card w-20 bg-base-100 shadow-xl btn-outline btn-primary cursor-pointer shadow-lg">
                                     <figure className="px-3 pt-3">
-                                        {midia.poster_path ? 
-                                                <img src={TMDB_IMG_BASE_URL + midia.poster_path} alt={"Poster de " + midia.title} className="rounded-xl" style={{ height: '84px', width: '56px' }}/> 
-                                            : 
-                                                <div className="skeleton w-32 h-32" style={{ height: '84px', width: '56px' }}></div>}
+                                        {midia.poster_path ?
+                                            <img src={TMDB_IMG_BASE_URL + midia.poster_path} alt={"Poster de " + midia.title} className="rounded-xl" style={{ height: '84px', width: '56px' }} />
+                                            :
+                                            <div className="skeleton w-32 h-32" style={{ height: '84px', width: '56px' }}></div>}
                                     </figure>
                                     <div className="items-center text-center h-16">
                                         <p className="truncate text-wrap align-text-top	items-start p-1 text-[10px]	mt-2 text-slate-300 media_title" style={{ height: '70px' }}>{midia.title}</p>
@@ -61,24 +61,27 @@ const FormDefault = ({setMidiaType = {} as any}) => {
                 </section>
             </section>
 
-            <section id="filters" className="w-80 flex flex-wrap gap-5 justify-center alert bg-neutral shadow-lg">
-                <label className="label cursor-pointer w-24">
-                    <span className="label-text">Filme</span>
-                    <input value={'film'} type="checkbox" className="checkbox" />
-                </label>
-                <label className="label cursor-pointer w-24">
-                    <span className="label-text">Série</span>
-                    <input value={'serie'} type="checkbox" className="checkbox" />
-                </label>
-                <label className="label cursor-pointer w-24">
-                    <span className="label-text">Anime</span>
-                    <input value={'anime'} type="checkbox" className="checkbox" />
-                </label>
-                <label className="label cursor-pointer w-24">
-                    <span className="label-text">Desenho</span>
-                    <input value={'cartoon'} type="checkbox" className="checkbox" />
-                </label>
-            </section>
+            <div className="w-96 alert bg-neutral shadow-lg">
+                <section id="filters" className="w-80 flex flex-wrap gap-5 justify-center">
+                    <label className="label cursor-pointer w-24">
+                        <span className="label-text">Filme</span>
+                        <input value={'film'} type="checkbox" className="checkbox" />
+                    </label>
+                    <label className="label cursor-pointer w-24">
+                        <span className="label-text">Série</span>
+                        <input value={'serie'} type="checkbox" className="checkbox" />
+                    </label>
+                    <label className="label cursor-pointer w-24">
+                        <span className="label-text">Anime</span>
+                        <input value={'anime'} type="checkbox" className="checkbox" />
+                    </label>
+                    <label className="label cursor-pointer w-24">
+                        <span className="label-text">Desenho</span>
+                        <input value={'cartoon'} type="checkbox" className="checkbox" />
+                    </label>
+                </section>
+            </div>
+
 
         </section>
     )

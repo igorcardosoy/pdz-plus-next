@@ -1,15 +1,14 @@
 "use client"
 
-import FormAddMovie from "@/components/Forms/FormAddMovie"
-import FormAddTvMidia from "@/components/Forms/FormAddTvMidia"
+import FormAddMovie from "@/components/Forms/Movie/FormAddMovie"
+import FormAddTvMidia from "@/components/Forms/Tv/FormAddTvMidia"
 import FormDefault from "@/components/Forms/FormDefault"
-import { isAuthenticated } from "@/utils/authentication"
+import {  useAuthenticated } from "@/utils/authentication"
 import { useState } from "react"
 
 const AddMovie = () => {
 
-    let isAuth:boolean = isAuthenticated()
-
+    let isAuth:boolean = useAuthenticated()
     const [midiaType, setMidiaType] = useState('' as string)
 
     if (!isAuth) {

@@ -1,13 +1,6 @@
-
-
 import MidiaContent from "@/components/MidiaContent"
 
-
-const Home = async () => {
-
-  
-    
-
+const Home = () => {
 
   return (
     <MidiaContent />

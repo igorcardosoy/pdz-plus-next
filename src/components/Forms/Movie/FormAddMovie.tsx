@@ -1,7 +1,7 @@
 'use client'
 
 import { ReactNode, useState } from "react"
-import MagnetLinkAndRes from "../Modal/MagnetLinkAndRes"
+import MagnetLinkAndRes from "./MagnetLinkAndRes"
 import { sendMovieToPDZ } from "@/utils/requests"
 
 const FormAddMovie = () => {
@@ -9,9 +9,8 @@ const FormAddMovie = () => {
     const [magnetLinksCount, setMagnetLinksCount] = useState(1)
     const [magnetLinks] = useState([] as ReactNode[])
 
-
+ 
     const addNewMagnetLink = (magnetLinksCount: number): void => {
-
         setMagnetLinksCount(magnetLinksCount + 1)
         magnetLinks.push(<MagnetLinkAndRes magnetLinkId={magnetLinksCount} key={magnetLinksCount} />)
     }
@@ -58,7 +57,7 @@ const FormAddMovie = () => {
         <form id="film-form" onSubmit={handleSubmitForm}>
             <section id="links">
 
-                <MagnetLinkAndRes key={magnetLinksCount} />
+                <MagnetLinkAndRes magnetLinkId={0} key={0} />
 
                 {
                     magnetLinks.map((magnetLink) => {
@@ -66,9 +65,9 @@ const FormAddMovie = () => {
                     })
                 }
 
-                <section className="flex flex-wrap items-center justify-center w-80 items-center gap-5">
-                    <section className="flex flex-wrap items-center justify-between w-80 items-center">
-                        <button onClick={() => { addNewMagnetLink(magnetLinksCount) }} id="add-magnet-link" type="button" className="btn btn-primary w-36	">Adicionar outro link</button>
+                <section className="flex flex-wrap items-center justify-center w-96 items-center gap-5">
+                    <section className="flex flex-wrap items-center justify-center w-96 items-center gap-5">
+                        <button onClick={() => { addNewMagnetLink(magnetLinksCount) }} id="add-magnet-link" type="button" className="btn btn-primary w-36	">Adicionar Link</button>
                         <button onClick={() => { removeLastMagnetLink(magnetLinksCount) }} id="add-magnet-link" type="button" className="btn btn-error w-36">Remover</button>
                     </section>
 

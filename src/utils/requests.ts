@@ -14,8 +14,6 @@ export async function getMidiaFromTMDB(id: number, type: string): Promise<TMDB_m
 }
 
 export async function getMidiaByQueryFromTMDB(query: string): Promise<TMDB_midia[]>{
-    console.log(query)
-    console.log(`${TMDB_URL}/search/multi?api_key=${TMDB_KEY}&language=pt-BR&query=${query}&page=1`)
     const res = await fetch(`${TMDB_URL}/search/multi?api_key=${TMDB_KEY}&language=pt-BR&query=${query}&page=1`);
     const data = await res.json()
 

@@ -10,7 +10,7 @@ const NavButtons = ({isAuth = false as boolean, isDropdown = false as boolean}) 
             <li><Link id="tv" href="/home/filter/tv">Series</Link></li>
             <li><Link id="cartoon" href="/home/filter/cartoon">Desenhos</Link></li>
             <li><Link id="anime" href="/home/filter/anime">Animes</Link></li>
-            {isAdministrator(isAuth) ? <li><Link id="anime" href="/home/add">Adicionar</Link></li> : ''}
+            {isAuth ? <li><Link id="anime" href="/home/add">Adicionar</Link></li> : ''}
         </ul>
     )
 }
