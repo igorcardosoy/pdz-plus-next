@@ -1,4 +1,4 @@
-import NextAuth, { NextAuthOptions } from "next-auth"
+import NextAuth, { NextAuthOptions, Session } from "next-auth"
 import DiscordProvider from "next-auth/providers/discord";
 import jwt from 'jsonwebtoken'
 import { api } from "@/utils/api";
@@ -27,7 +27,8 @@ export const authOptions: NextAuthOptions = {
       
       return token;
     },
-    async session({ session, token, user }) {
+    
+    async session({ session = {} as any, token, user }) {
       // Send properties to the client, like an access_token and user id from a provider.
       if(session){
         session.jwt = token.jwt
@@ -37,6 +38,6 @@ export const authOptions: NextAuthOptions = {
     },
 
 }}
-
+// @ts-ignore
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST }

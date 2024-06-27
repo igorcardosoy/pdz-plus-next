@@ -4,7 +4,6 @@ import ModalButtonMovie from "./ModalButtonMovie"
 import ModalButtonTV from "./ModalButtonTV"
 import { MagnetLinkWithResolution, PDZ_midia } from "@/entities/PDZ_midia"
 import { useGetMidiaFromTMDBWithoutAsync, srwResponseTMDB } from "@/utils/swrRequests"
-import { isAdministrator } from "@/utils/authentication"
 import ModalRemoveButton from "./ModalRemoveButton"
 
 const ModalCard = ({ modalId = 0 as number, pdzMidia = {} as PDZ_midia, isAuthenticated = false as boolean }) => {
@@ -82,7 +81,7 @@ const ModalCard = ({ modalId = 0 as number, pdzMidia = {} as PDZ_midia, isAuthen
                         : ''}
 
                     <div className="modal-action">
-                        <div className="flex justify-center gap-3" style={{ width: "100%", height: "100%" }}>
+                        <div className="flex justify-center gap-3 flex-wrap" style={{ width: "100%", height: "100%" }}>
                             {
                                 pdzMidia.magnet_and_resolution?.map((magnetAndRes: MagnetLinkWithResolution, index) => {
                                     return (

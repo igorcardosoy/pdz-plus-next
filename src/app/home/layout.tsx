@@ -35,7 +35,7 @@ export default async function RootLayout({
 
   return (
     <>
-      <AuthenticatedLayout isDiscordAuthenticated={isDiscordAuthenticated} children={children} user={user} />
+      <AuthenticatedLayout isDiscordAuthenticated={isDiscordAuthenticated} user={user}>{children}</AuthenticatedLayout>
     </>
   );
 }
