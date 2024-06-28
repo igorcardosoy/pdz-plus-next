@@ -1,4 +1,3 @@
-import { isAdministrator } from "@/utils/authentication"
 import Link from "next/link"
 
 const NavButtons = ({isAuth = false as boolean, isDropdown = false as boolean}) => {

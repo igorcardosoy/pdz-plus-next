@@ -5,6 +5,7 @@ import ModalButtonTV from "./ModalButtonTV"
 import { MagnetLinkWithResolution, PDZ_midia } from "@/entities/PDZ_midia"
 import { useGetMidiaFromTMDBWithoutAsync, srwResponseTMDB } from "@/utils/swrRequests"
 import ModalRemoveButton from "./ModalRemoveButton"
+import Image from "next/image"
 
 const ModalCard = ({ modalId = 0 as number, pdzMidia = {} as PDZ_midia, isAuthenticated = false as boolean }) => {
 
@@ -48,7 +49,15 @@ const ModalCard = ({ modalId = 0 as number, pdzMidia = {} as PDZ_midia, isAuthen
             <label htmlFor={"my_modal_" + modalId} className="cursor-pointer shadow-lg">
                 <div className="card w-52 bg-base-100 shadow-xl">
                     <figure className="px-5 pt-5">
-                        <img src={TMDB_IMG_URL + tmdbMidia.poster_path} alt={"Poster de " + tmdbMidia.title} className="rounded-xl" />
+                        <Image 
+                            src={TMDB_IMG_URL + tmdbMidia.poster_path}
+                            width={300}
+                            height={450}
+                            alt={"Poster de " + tmdbMidia.title} 
+                            className="rounded-xl" 
+                            placeholder="blur"
+                            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkAAIAAAoAAv/lxKUAAAAASUVORK5CYII="
+                        />
                     </figure>
                     <div className="card-body items-center text-center ">
                         <h5 className="text-clip text-wrap align-text-top items-start" style={{ height: '60px' }}> {tmdbMidia.title}</h5>
@@ -58,7 +67,7 @@ const ModalCard = ({ modalId = 0 as number, pdzMidia = {} as PDZ_midia, isAuthen
             <input onKeyDown={handleKeyDownModal} type="checkbox" id={"my_modal_" + modalId} className="modal-toggle" />
 
             <div className="modal" role="dialog">
-                <div className="modal-box flex gap-5 flex-col">
+                <div className="modal-box flex gap-5 flex-col ">
                     <label htmlFor={"my_modal_" + modalId} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</label>
                     <section>
                         <h3 className="text-lg font-bold">{tmdbMidia.title}</h3>

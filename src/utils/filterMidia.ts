@@ -1,7 +1,7 @@
 import { PDZ_midia } from "@/entities/PDZ_midia";
 import { srwResponsePDZ } from "./swrRequests";
 
-export function getFilteredMidia(midiaFinded: srwResponsePDZ, midiaType: string, searchText = '' as string): PDZ_midia[] {
+export async function getFilteredMidia(midiaFinded: srwResponsePDZ, midiaType: string, searchText = '' as string): Promise<PDZ_midia[]> {
     switch (midiaType) {
         case 'movie':
             return midiaFinded.data.filter(midia => midia.filter.includes('film'))

@@ -18,8 +18,8 @@ const SearchBar = () => {
     }
 
     return (
-        <div className="form-control">
-            <input onChange={handleChange} value={searchText} className="input input-bordered w-56 mr-3" type="search" placeholder="Pesquisar" aria-label="Search" />
+        <div className="form-control lg-hidden">
+            <input onChange={handleChange} value={searchText} className="input input-bordered  w-24 md:w-auto" type="search" placeholder="Pesquisar" aria-label="Search" />
         </div>
     )
 }
