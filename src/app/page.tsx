@@ -37,7 +37,7 @@ const loginPage = () => {
 
 
   return (
-    <div className="flex justify-evenly items-center flex-col h-svh" style={{ backgroundImage: `url(/pdz-background2.png)`, backgroundSize: 'cover' }}>
+    <div className="flex justify-evenly items-center flex-col h-svh" style={{ backgroundImage: `url(/pdz-background2.png)`, backgroundPosition: 'center' , backgroundSize: 'cover' }}>
 
       <form onSubmit={handleLogin} className="flex flex-col gap-4 items-center justify-center mb-10 alert w-fit h-fit">
         <label className="input input-bordered flex items-center gap-2">

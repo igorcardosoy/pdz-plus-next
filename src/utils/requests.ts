@@ -20,6 +20,13 @@ export async function getMidiaByQueryFromTMDB(query: string): Promise<TMDB_midia
     return data.results;
 }
 
+export async function getMidiaCollectionByQueryFromTMDB(query: string): Promise<TMDB_midia[]>{
+    const res = await fetch(`${TMDB_URL}/search/collection?api_key=${TMDB_KEY}&language=pt-BR&query=${query}&page=1`);
+    const data = await res.json()
+
+    return data.results;
+}
+
 export async function getAllMidiaFromPDZ(): Promise<PDZ_midia[]>{
     const options = {
         method: 'GET',
@@ -168,6 +175,10 @@ export async function deletePDZMidia(id: number, type: string): Promise<boolean>
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
+    }
+
+    if (type == 'collection') {
+        type = 'movie'
     }
 
     const result = await fetch(`${PDZ_URL}/${type}/${id}`, options)

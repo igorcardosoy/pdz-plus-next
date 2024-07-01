@@ -1,11 +1,12 @@
 "use client"
 
-import { searchMidiaInTMDB } from "@/utils/movieSearch"
+import { getTypeInPtBR, searchMidiaInTMDB } from "@/utils/movieSearch"
 import { useState } from "react"
 
 const FormDefault = ({ setMidiaType = {} as any }) => {
 
     const [midiaList, setMidiaList] = useState([] as TMDB_midia[])
+    const [movieId, setMovieId] = useState('')
 
 
     const TMDB_IMG_BASE_URL = process.env.NEXT_PUBLIC_TMDB_PUBLIC_IMAGE_BASE_URL
@@ -22,7 +23,15 @@ const FormDefault = ({ setMidiaType = {} as any }) => {
         const midiaId = e.currentTarget.id
         document.getElementById(midiaId)?.classList.add('bg-primary')
 
-        setMidiaType(String(midiaList.find(midia => midia.id == Number(midiaId))?.media_type))
+        let midiaType: string = String(midiaList.find(midia => midia.id == Number(midiaId))?.media_type)
+        if (midiaType === 'undefined') midiaType = 'movie'
+
+        setMidiaType(midiaType)
+        changeIdInputValue({ target: { value: midiaId } })
+    }
+
+    const changeIdInputValue = (e: any) => {
+        setMovieId(e.target.value)
     }
 
     midiaList.map((midia) => {
@@ -33,7 +42,7 @@ const FormDefault = ({ setMidiaType = {} as any }) => {
 
     return (
         <section className="flex flex-col gap-4 items-center">
-            <section className="flex flex-wrap gap-3 justify-center w-96  bg-neutral shadow-lg alert">
+            <section className="flex flex-wrap flex-col gap-3 justify-center content-center w-96  bg-neutral shadow-lg alert">
                 <label className="input input-bordered flex items-center gap-2 shadow-lg w-80">
                     <input onChange={movieSearch} type="text" className="grow" placeholder="Pesquisar no TMDB" />
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path fillRule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clipRule="evenodd" /></svg>
@@ -42,8 +51,12 @@ const FormDefault = ({ setMidiaType = {} as any }) => {
                 <section id="midia-list" className="flex flex-wrap gap-2">
                     {
                         midiaList.map((midia) => {
+
+                            let type = getTypeInPtBR(midia.media_type)
+
                             return (
                                 <div onClick={handleClickInCard} id={String(midia.id)} key={midia.id} className="card w-20 bg-base-100 shadow-xl btn-outline btn-primary cursor-pointer shadow-lg">
+                                    <p className="text-[10px] text-slate-300 text-center mt-2">{type}</p>
                                     <figure className="px-3 pt-3">
                                         {midia.poster_path ?
                                             <img src={TMDB_IMG_BASE_URL + midia.poster_path} alt={"Poster de " + midia.title} className="rounded-xl" style={{ height: '84px', width: '56px' }} />
@@ -59,6 +72,13 @@ const FormDefault = ({ setMidiaType = {} as any }) => {
                         })
                     }
                 </section>
+
+                <label className="input input-bordered flex items-center gap-2 shadow-lg w-80">
+                    <input id="movie-id-input" type="number" className="grow" placeholder="ID" value={movieId} onChange={changeIdInputValue} />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-film" viewBox="0 0 16 16">
+                        <path d="M0 1a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm4 0v6h8V1zm8 8H4v6h8zM1 1v2h2V1zm2 3H1v2h2zM1 7v2h2V7zm2 3H1v2h2zm-2 3v2h2v-2zM15 1h-2v2h2zm-2 3v2h2V4zm2 3h-2v2h2zm-2 3v2h2v-2zm2 3h-2v2h2z" />
+                    </svg>
+                </label>
             </section>
 
             <div className="w-96 alert bg-neutral shadow-lg">

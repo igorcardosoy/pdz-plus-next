@@ -5,7 +5,7 @@ export async function getFilteredMidia(midiaFinded: srwResponsePDZ, midiaType: s
     switch (midiaType) {
         case 'movie':
             return midiaFinded.data.filter(midia => midia.filter.includes('film'))
-        case 'tv':  
+        case 'tv':
             return midiaFinded.data.filter(midia => midia.filter.includes('serie'))
         case 'anime':
             return midiaFinded.data.filter(midia => midia.filter.includes('anime'))

@@ -2,6 +2,7 @@
 
 import { Episode, PDZ_midia, Season } from "@/entities/PDZ_midia";
 import { useEffect, useState } from "react";
+import { getSVG } from "./ModalCard";
 
 interface ModalButtonTVProps {
   modalId?: number;
@@ -12,6 +13,7 @@ const ModalButtonTV: React.FC<ModalButtonTVProps> = ({ modalId = 0, midia = {} a
   const [episodeIndex, setEpisodeIndex] = useState(0);
   const [seasons, setSeasons] = useState<Season[]>([]);
   const [episodes, setEpisodes] = useState<Episode[]>([]);
+  const [svg, setSvg] = useState<JSX.Element>(<></>);
 
   useEffect(() => {
     if (midia.seasons) {
@@ -32,6 +34,12 @@ const ModalButtonTV: React.FC<ModalButtonTVProps> = ({ modalId = 0, midia = {} a
   const handleChangeEpisode = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setEpisodeIndex(parseInt(event.target.value, 10));
   };
+
+  useEffect(() => {
+    if (episodes.length > 0) {
+      setSvg(getSVG(episodes[episodeIndex]?.magnetLink));
+    }
+  }, [episodeIndex, episodes]);
 
   return (
     <>
@@ -62,10 +70,7 @@ const ModalButtonTV: React.FC<ModalButtonTVProps> = ({ modalId = 0, midia = {} a
           className={`btn btn-outline btn-success page-button button-download-id${modalId}`}
           role="button"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-download" viewBox="0 0 16 16">
-            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
-            <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z" />
-          </svg>
+          {svg}
           Baixar
         </a>
       </div>

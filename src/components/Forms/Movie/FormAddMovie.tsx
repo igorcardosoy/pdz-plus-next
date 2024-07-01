@@ -27,9 +27,13 @@ const FormAddMovie = () => {
 
         const selectedMidia = document.querySelector('.bg-primary')
 
-        const tmdbId: number | any = selectedMidia?.id
+        const tmdbId: number | any = (document.getElementById('movie-id-input') as any)?.value
         const tmdbTitle: string | any = selectedMidia?.querySelector('.media_title')?.textContent
-        const tmdbType: string | any = selectedMidia?.querySelector('.media_type')?.textContent
+        let tmdbType: string | any = selectedMidia?.querySelector('.media_type')?.textContent 
+        
+        if (tmdbType == '') {
+            tmdbType = 'collection'
+        }
 
         const filters = [] as string[]
 

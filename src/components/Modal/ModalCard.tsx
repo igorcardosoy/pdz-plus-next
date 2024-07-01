@@ -113,4 +113,24 @@ const ModalCard = ({ modalId = 0 as number, pdzMidia = {} as PDZ_midia, isAuthen
     )
 }
 
+export function getSVG(link: string): JSX.Element {
+    let svg: JSX.Element = <></>
+
+    if (link.includes('magnet')) {
+        svg = <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-magnet" viewBox="0 0 16 16" >
+            <path d="M8 1a7 7 0 0 0-7 7v3h4V8a3 3 0 0 1 6 0v3h4V8a7 7 0 0 0-7-7m7 11h-4v3h4zM5 12H1v3h4zM0 8a8 8 0 1 1 16 0v8h-6V8a2 2 0 1 0-4 0v8H0z" />
+        </svg>
+    } else if (link.includes('drive')) {
+        svg = <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 50 50" >
+            <path d="M30.418,6H18.582c-0.724,0-1.392,0.391-1.745,1.023L3.423,30.988c-0.359,0.642-0.337,1.429,0.057,2.05l6.38,10.035 C10.228,43.65,10.864,44,11.548,44h25.903c0.684,0,1.321-0.35,1.688-0.927l6.38-10.035c0.395-0.621,0.417-1.408,0.057-2.05 L32.163,7.023C31.809,6.391,31.142,6,30.418,6z M30.41,8L43.3,31H32.61L20.65,8H30.41z M30.35,31H18.47l5.98-11.34L30.35,31z M5.16,31.97L18.49,8.19l4.84,9.31L10.92,41.01L5.16,31.97z M37.45,42H12.66l4.75-9h25.77L37.45,42z" > </path>
+        </svg>
+    } else if (link.includes('mediafire')) {
+        svg = <svg width="20" height="20" viewBox="0 0 48 48" id="Layer_2" xmlns = "http://www.w3.org/2000/svg" fill = "currentColor" >
+            <path className="cls-1" d="M31.39,13.54c6,.2,12.18,3.71,12.11,11-.06,6.2-4.72,10-12.1,10-5.71,0-10.09-4.72-15.92-5.38-4.21-.47,3.39-.2,1.89-2.55-1.36-2.13-5.63-2.49-8.2-2.1-3.74.57-4.41,2-4.67,2.6,2.51-5.8,6.13-3.67,8-6.58.74-1.11-1.72-1.57-3.37-.35a7.06,7.06,0,0,0-.67.67,3.86,3.86,0,0,1,.67-.67,8.89,8.89,0,0,1,5.94-2.22c5.85-.27,11.19,2.93,11.73.28s-5-1.32-4.22-2a12.6,12.6,0,0,1,7.57-2.63Zm2.23,7c-2.37.2-2.45,1.24-4.69,2.44-3.88,2.06-6.19,1.17-6.19,1.28s1.58.74,5.42,2.61a13.82,13.82,0,0,0,5.46,1.59c2.82.08,4.81-1.71,4.81-3.9A4.25,4.25,0,0,0,33.62,20.51Z" />
+        </svg >
+    }
+
+    return svg
+}
+
 export default ModalCard

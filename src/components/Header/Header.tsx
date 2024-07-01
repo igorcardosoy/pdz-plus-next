@@ -2,11 +2,9 @@
 
 import Link from "next/link"
 import ProfileButton from "./ProfileButton"
-import LoginButton from "./LoginButton"
 import NavButtons from "./NavButtons"
 import SearchBar from "./SearchBar"
 import { user } from "@/entities/Users"
-import { useState } from "react"
 
 const Header = ({ user = {} as user, isDiscord = false as boolean }) => {
 
@@ -19,10 +17,12 @@ const Header = ({ user = {} as user, isDiscord = false as boolean }) => {
                     </div>
                     <NavButtons isAuth={!isDiscord} isDropdown={true} />
                 </div>
-                
-                <Link className="btn btn-ghost text-xl ml-3" id="all" href="/home" style={{ color: 'white', backgroundImage: `url(/pdz-background2.png)`, backgroundSize: '500px', backgroundPosition: 'center'}} >PDZ+</Link>
+
+                <a className="btn btn-default text-xl ml-3" href=""> <img width={100} src="/pdz-hub-hd.png" alt="" /></a>
             </div>
             <div className="navbar-center hidden lg:flex">
+                {/* style={{ color: 'white', backgroundImage: `url(/pdz-background2.png)`, backgroundSize: '500px', backgroundPosition: 'center'}} */}
+                <Link className="btn btn-ghost text-xl ml-3" id="all" href="/home"  >PDZ+</Link>
                 <NavButtons isAuth={!isDiscord} isDropdown={false} />
             </div>
             <div className="navbar-end">
